@@ -20,6 +20,7 @@ if __name__ == '__main__':
 
     # Podział danych na zmienne zależne oraz niezależne
     feature_cols = ['pregnant', 'insulin', 'bmi', 'age', 'glucose', 'bp', 'pedigree']
+    target_cols = ['skin', 'label']
     X = data[feature_cols]  # Zmienne niezależne (features)
     y = data.label  # Zmienne zależne (target)
 
@@ -41,6 +42,6 @@ if __name__ == '__main__':
     fig = plt.figure(figsize=(25, 20))
     _ = tree.plot_tree(clf,
                        feature_names=feature_cols,
-                       class_names=feature_cols,
+                       class_names=target_cols,
                        filled=True)
     fig.savefig("decision_tree.png")
