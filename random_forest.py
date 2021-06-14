@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def readData():
-    col_names = ['pregnant', 'glucose', 'bp', 'skin', 'insulin', 'bmi', 'pedigree', 'age', 'label']
+    col_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'PedigreeFunction',
+                 'Age', 'Outcome']
     pima = pd.read_csv("diabetes.csv", names=col_names)
     return pima
 
@@ -21,9 +22,11 @@ if __name__ == '__main__':
     data.head()
 
     # Podział danych na zmienne zależne oraz niezależne
-    feature_cols = ['pregnant', 'insulin', 'bmi', 'age', 'glucose', 'bp', 'pedigree']
+    feature_cols = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'PedigreeFunction',
+                    'Age']
+    target_cols = ['Outcome']
     X = data[feature_cols]  # Zmienne niezależne (features)
-    y = data.label  # Zmienne zależne (target)
+    y = data[target_cols]  # Zmienne zależne (target)
 
     # Podział danych na część testową oraz uczącą
     X_train, X_test, y_train, y_test = splitData(X, y)

@@ -5,12 +5,10 @@ from sklearn import metrics, tree
 from matplotlib import pyplot as plt
 
 def readData():
-    col_names = ['pregnant', 'glucose', 'bp', 'skin', 'insulin', 'bmi', 'pedigree', 'age', 'label']
-    pima = pd.read_csv("diabetes.csv", names=col_names)
-    return pima
-
-def splitData(X, y):
-    return train_test_split(X, y, test_size=0.3, random_state=1)
+    col_names = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'PedigreeFunction',
+                 'Age', 'Outcome']
+    data = pd.read_csv("diabetes.csv", names=col_names)
+    return data
 
 if __name__ == '__main__':
 
@@ -19,10 +17,11 @@ if __name__ == '__main__':
     data.head()
 
     # Podział danych na zmienne zależne oraz niezależne
-    feature_cols = ['pregnant', 'insulin', 'bmi', 'age', 'glucose', 'bp', 'pedigree']
-    target_cols = ['skin', 'label']
+    feature_cols = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'PedigreeFunction',
+                    'Age']
+    target_cols = ['Outcome']
     X = data[feature_cols]  # Zmienne niezależne (features)
-    y = data.label  # Zmienne zależne (target)
+    y = data.Outcome # Zmienne zależne (target)
 
     # Podział danych na część testową oraz uczącą
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
@@ -42,6 +41,7 @@ if __name__ == '__main__':
     fig = plt.figure(figsize=(25, 20))
     _ = tree.plot_tree(clf,
                        feature_names=feature_cols,
-                       class_names=target_cols,
+                       class_names=['not-diabetic', 'diabetic'],
                        filled=True)
+
     fig.savefig("decision_tree.png")
