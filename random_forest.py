@@ -2,6 +2,7 @@ import pandas as pd
 
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import roc_curve
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -40,7 +41,23 @@ if __name__ == '__main__':
     # Predykcja odpowiedzi dla grupy testowej
     y_pred = clf.predict(X_test)
 
-    print("Precyzja:", metrics.accuracy_score(y_test, y_pred))
+    print("CA:", metrics.accuracy_score(y_test, y_pred))
+
+    print("Precision: ", metrics.precision_score(y_test, y_pred))
+
+    print("F1: ", metrics.f1_score(y_test, y_pred, average='weighted'))
+
+    print("Recall: ", metrics.recall_score(y_test, y_pred, average='weighted'))
+
+    fpr, tpr, _ = roc_curve(y_test, y_pred)
+
+    plt.clf()
+    plt.plot([0, 1], [0, 1], color='darkblue', linestyle='--')
+    plt.plot(fpr, tpr)
+    plt.xlabel('FPR')
+    plt.ylabel('TPR')
+    plt.title('Krzywa ROC dla lasu losowego')
+    plt.show()
 
     # Tworzenie wyników ważności poszczególnych zmiennych
     feature_imp = pd.Series(clf.feature_importances_, index=feature_cols).sort_values(ascending=False)
